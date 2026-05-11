@@ -1,4 +1,4 @@
-# Cybersecurity Forensic Investigation Workbook
+# Cybersecurity Purple Team Workbook
 > An automated Python-driven reporting engine for generating Tier-3 SOC, DFIR, and Purple Team dossiers.
 
 ---
