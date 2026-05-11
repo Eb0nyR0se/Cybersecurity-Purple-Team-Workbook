@@ -20,3 +20,15 @@ An automated Python tool for generating Tier-3 SOC, DFIR, and Penetration Testin
 * **Automated Report Generation:** Python-driven generation of professional, formatted Excel Dossiers using `pandas` and `openpyxl`.
 * **Dynamic Pivot Matrix:** A layout designed for quick "Gap Analysis," allowing researchers to compare tool performance side-by-side.
 * **Modular Design:** Easily extensible data structures to add new cybersecurity frameworks or custom lab tools.
+#
+## 📁 Workbook Structure
+The generated `.xlsx` report contains the following specialized modules:
+- **Tactical Activity Log:** 🔵 Blue Team command-and-control logging.
+- **PTES Matrix:** 🟢 Network penetration testing milestones.
+- **OWASP Tracker:** 🟠 Web application vulnerability mapping.
+- **NIST IR Lifecycle:** 🔴 Incident response and forensic timeline.
+- **Evidence Vault:** ⚫ SHA-256 hash verification and Chain of Custody.
+
+## Technical Architecture
+![Cybersecurity SOC Architecture Diagram](cybersecurity_architecture.png)
+
