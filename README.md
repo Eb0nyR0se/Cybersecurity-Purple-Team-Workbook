@@ -30,5 +30,5 @@ The generated `.xlsx` report contains the following specialized modules:
 - **Evidence Vault:** ⚫ SHA-256 hash verification and Chain of Custody.
 
 ## Technical Architecture
-![Cybersecurity SOC Architecture Diagram](https://raw.githubusercontent.com/Eb0nyR0se/Cybersecurity-Forensic-Investigation-Workbook/main/cybersecurity_architecture.png.png)
+![Cybersecurity SOC Architecture Diagram](./cybersecurity_architecture.png.png)
 
