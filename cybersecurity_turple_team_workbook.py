@@ -4,8 +4,8 @@ from datetime import datetime
 from openpyxl.styles import Alignment, Font, PatternFill
 
 
-def generate_ultimate_master_workbook():
-    # 1. ROBUST PATH DISCOVERY (Fixes the 'non-existent directory' error)
+def generate_full_framework_master_workbook():
+    # 1. ROBUST PATH DISCOVERY
     user_profile = os.environ['USERPROFILE']
     paths_to_check = [
         os.path.join(user_profile, 'OneDrive', 'Desktop'),
@@ -14,70 +14,73 @@ def generate_ultimate_master_workbook():
     ]
 
     desktop_path = next((p for p in paths_to_check if os.path.exists(p)), user_profile)
-    filename = os.path.join(desktop_path, "Cybersecurity_Purple_Team_Investigation_Workbook.xlsx")
+    filename = os.path.join(desktop_path, "Cybersecurity_Unified_Operations_Workbook.xlsx")
 
     today_str = datetime.now().strftime('%Y-%m-%d')
     now_ts = datetime.now().strftime('%H:%M:%S')
 
-    # --- 2. DATA STRUCTURES (Re-Integrated Features) ---
+    # --- 2. DATA STRUCTURES ---
 
-    # NEW: Dossier Tab (Restored from Version 1)
+    # ADMINISTRATIVE: Dossier (Length 6)
     dossier_data = {
-        'Field': ['Case ID', 'Analyst', 'Sector', 'Classification', 'Standard', 'Lab Environment'],
-        'Value': ['PHX-2026-001', 'First Last Name', 'Cybersecurity Research', 'Confidential', 'NIST / PTES / OSSTMM',
-                  'Phoenix Prime Lab']
+        'Field': ['Case ID', 'Analyst', 'Sector', 'Classification', 'Standards', 'Lab Environment'],
+        'Value': [f'CASE-{datetime.now().year}-001', 'First Last Name', 'Cybersecurity Research', 'Confidential',
+                  'NIST / PTES / OSSTMM / MITRE', 'Security Onion / pfSense / Netgate']
     }
 
-    # BLUE TEAM: NIST Incident Response (Tactical + NIST Phases restored)
+    # 🛡 BLUE TEAM: NIST 800-61 (Length 1)
     blue_team_data = {
-        'Date': [today_str],
-        'Timestamp': [now_ts],
+        'Event_Date': [today_str],
+        'Event_Time': [now_ts],
+        'Discovery_Time': [''],
         'Analyst': ['First Last Name'],
-        'NIST_Phase': ['Detection/Analysis'],  # Restored explicit phase
-        'Incident_Type': ['Unauthorized Access'],
-        'Detection_Source': ['Snort/Security Onion'],
+        'NIST_Lifecycle_Phase': ['Detection & Analysis'],
+        'Incident_Category': ['Unauthorized Access'],
+        'Detection_Source': ['Security Onion (Zeek/Suricata)'],
         'Source_MAC': [''],
-        'Target_IP': ['192.168.x.x'],
-        'TTL_Value': [''],
+        'Target_IP/VLAN': ['192.168.x.x'],
         'Impact_Level': ['Medium'],
-        'Command_Executed': [''],
+        'Containment_Action': ['VLAN Isolation'],
+        'Command_Executed': ['so-status'],
         'Findings/Observations': ['Logged'],
         'Resolution_Status': ['Active']
     }
 
-    # RED TEAM: PTES & OSSTMM (Restored OSSTMM Class & Methodology)
+    # ⚔️ RED TEAM: PTES & OSSTMM (Length 1)
     red_team_data = {
         'Date': [today_str],
         'Timestamp': [now_ts],
         'Analyst': ['First Last Name'],
-        'PTES_Phase': ['Intelligence Gathering'],
-        'OSSTMM_Class': ['Data Networks'],  # Restored OSSTMM Class
-        'Methodology': ['Service Mapping'],  # Restored Methodology
+        'PTES_Phase': ['Exploitation'],
+        'OSSTMM_Class': ['Data Networks'],
+        'MITRE_ATT&CK_ID': ['T1059.001'],
         'Target_Host': ['192.168.x.x'],
-        'Command_Executed': ['nmap -sV'],
-        'Findings/Observations': ['Filtered'],
+        'Methodology': ['Service Mapping'],
+        'Command_Executed': ['nmap -sV --script vuln'],
+        'Raw_Tool_Output': ['Filtered'],
         'Risk_Score': ['Medium']
     }
 
-    # RED TEAM: OWASP
+    # RED TEAM: Web App OWASP (Length 2)
     owasp_data = {
         'Date': [today_str, today_str],
         'Timestamp': [now_ts, now_ts],
+        'Analyst': ['First Last Name', 'First Last Name'],  # FIXED: Balanced to length 2
         'OWASP_Category': ['A01:2021-Broken Access Control', 'A03:2021-Injection'],
         'Target_URL': ['192.168.x.x/admin', 'Login Field'],
-        'Command_Executed': ['', ''],
+        'Command_Executed': ['ffuf', 'sqlmap'],
         'Findings/Observations': ['Critical', 'High'],
         'Remediation_Plan': ['Implement RBAC', 'Parameterized Queries']
     }
 
-    # EVIDENCE VAULT
+    # ⛓️ EVIDENCE VAULT (Length 2)
     evidence_vault = {
         'Date': [today_str, today_str],
         'Timestamp': [now_ts, now_ts],
         'Evidence_ID': ['EV-001', 'EV-002'],
         'Artifact_Source': ['Nmap Scan Log', 'Wireshark PCAP'],
         'SHA-256_Hash': ['e3b0c442...', '5df6e0e2...'],
-        'Analyst': ['First Last Name', 'First Last Name'],
+        'Analyst': ['First Last Name', 'First Last Name'],  # FIXED: Balanced to length 2
         'Integrity_Status': ['Verified', 'Verified']
     }
 
@@ -90,30 +93,28 @@ def generate_ultimate_master_workbook():
             pd.DataFrame(owasp_data).to_excel(writer, sheet_name='Red_Team_OWASP', index=False, startrow=1)
             pd.DataFrame(evidence_vault).to_excel(writer, sheet_name='Evidence_Vault', index=False, startrow=1)
 
-            styling_config = [
-                ('Dossier', "INVESTIGATION DOSSIER SUMMARY", "212121", 2),
-                ('Blue_Team_NIST_IR', "BLUE TEAM: TACTICAL INCIDENT RESPONSE (NIST ALIGNED)", "0D47A1", 14),
-                ('Red_Team_PTES_OSSTMM', "RED TEAM: PTES & OSSTMM PENETRATION TESTING", "B71C1C", 11),
-                ('Red_Team_OWASP', "RED TEAM: OWASP TOP 10 WEB ASSESSMENT", "B71C1C", 7),
-                ('Evidence_Vault', "DFIR: EVIDENCE VAULT & HASH INTEGRITY", "424242", 7)
-            ]
-
-            for sheet, title, color, cols in styling_config:
-                ws = writer.sheets[sheet]
-                ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=cols)
+            # Define styling parameters for each sheet
+            for sheet_name, title, color, col_count in [
+                ('Dossier', "INVESTIGATION DOSSIER & FRAMEWORK MAPPING", "212121", 2),
+                ('Blue_Team_NIST_IR', "DEFENSIVE OPERATIONS: NIST IR & SIEM CORRELATION", "0D47A1", 14),
+                ('Red_Team_PTES_OSSTMM', "OFFENSIVE OPERATIONS: MITRE / PTES / OSSTMM", "B71C1C", 11),
+                ('Red_Team_OWASP', "RED TEAM: OWASP TOP 10 WEB ASSESSMENT", "B71C1C", 8),
+                ('Evidence_Vault', "FORENSIC CHAIN OF CUSTODY (SHA-256)", "424242", 7)
+            ]:
+                ws = writer.sheets[sheet_name]
+                ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=col_count)
                 header = ws.cell(row=1, column=1)
                 header.value = title
                 header.fill = PatternFill(start_color=color, end_color=color, fill_type="solid")
                 header.font = Font(color="FFFFFF", bold=True, size=12)
                 header.alignment = Alignment(horizontal="center")
 
-                # Column Headers Row 2: Bold and Centered
-                for col in range(1, cols + 1):
+                for col in range(1, col_count + 1):
                     col_header = ws.cell(row=2, column=col)
                     col_header.font = Font(bold=True)
                     col_header.alignment = Alignment(horizontal="center")
 
-        print("SUCCESS")
+        print(f"SUCCESS: Workbook generated at {filename}")
         os.startfile(filename)
 
     except Exception as e:
@@ -121,4 +122,4 @@ def generate_ultimate_master_workbook():
 
 
 if __name__ == "__main__":
-    generate_ultimate_master_workbook()
+    generate_full_framework_master_workbook()
